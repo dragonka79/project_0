@@ -1,18 +1,21 @@
-from pprint import pprint
-import nmap
+from copy import copy
+from copy import deepcopy
 
-nm = nmap.PortScanner()
+xs = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-while True:
+# Shallow copy
+# ys= copy(xs)
 
-    ip = input("\nInput IP address to scan: ")
-    if not ip:
-        break
+# xs.append("új_copy")
+# xs[2][2] = 0
+# print(f"xs: {xs}")
+# print(f"ys: {ys}")
 
-    print(f"\n--- beginning scan of {ip}")
-    output = nm.scan(ip, '2-1024')
-    print(f"--- --- command: {nm.command_line()}")
+# Deepcopy
 
-    print("----- nmap scan output -------------------")
-    pprint(output)
-    break
+zs= deepcopy(xs)
+
+xs.append("új_deepcopy")
+xs[2][2] = 1
+print(f"xs: {xs}")
+print(f"zs: {zs}")
