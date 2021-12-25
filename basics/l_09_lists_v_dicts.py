@@ -12,7 +12,8 @@ if __name__ == '__main__':
     devices_dict = dict()
     for device in devices:
         # print(device)
-        devices_dict[device["ip"]] = device
+        devices_dict[device["ip"]] = device # A 'devices' dictben lévő 'ip' key value-ja lesz a key és a 'device' a value a 'devices_dict' dictben.
+    # print(devices_dict)
 
     print("calculating tabular output of devices ...")
     print("\n", tabulate(devices, headers="keys"))
