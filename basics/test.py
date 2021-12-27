@@ -1,36 +1,20 @@
-from enum import Enum
+num_string = " one, two, three "
 
-CISCO = "Cisco"
+num_list = list()
 
+for numbers in num_string.split(","):
+    num_list.append(numbers.strip())
 
-class Vendor:
-    CISCO = "Cisco Systems"
-    JUNIPER = "juniper"
-    ARISTA = "arista"
-
-print(CISCO)
-print(Vendor.CISCO)
-
-#  Enum
-# https://docs.python.org/3/library/enum.html
-
-class Vendors(Enum):
-    CISCO = 1
-    JUNIPER = 2
-    ARISTA = 3
-
-print(Vendors.CISCO.name)
-print(Vendors.CISCO.value)
-
-# Printing all items using * just as in a for loop
-
-for vendors in Vendors:
-    print(vendors)
-print('\n')
-
-print(*Vendors, sep='\n')   
-print('\n')
+print(num_list)
 
 
-L = [['some'], ['lists'], ['here']]
-print('The lists are:', *L, sep='\n')
+# LIST COMPREHENSION
+
+j = [str(i) for i in range(1,10)]
+print(j)
+
+
+# Printing odd numbers only in a range
+
+l = [ p for p in range(1,15) if p%2 != 0 ]
+print(l)
