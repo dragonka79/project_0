@@ -1,4 +1,4 @@
-# Decapitalizing and remving some characters
+# Decapitalizing and removing some characters
 
 j = "ABcv,U:l.,"
 k = j.casefold().replace(",", "").replace(":", "").replace(".", "")
