@@ -10,5 +10,3 @@ print('l típusa: ', type(l))
 s = tuple(l)
 print('s típusa: ', type(s))
 print(len(l))
-
-

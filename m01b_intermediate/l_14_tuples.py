@@ -1,5 +1,9 @@
-import sys
-sys.path.append('/home/zolcs/Downloads/quokka/')
+
+
+# import sys
+# sys.path.append('/home/zolcs/Downloads/quokka/') # A modul gyökeréig kell 
+# ha nincs benne a pythonpathban (de már beleraktam), akkor a ~/.bashrc-be : export PYTHONPATH="${PYTHONPATH}:/my/other/path"
+
 from m01_basics.util.create_utils import create_devices
 from pprint import pprint
 from collections import namedtuple
