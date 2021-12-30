@@ -1,6 +1,6 @@
 import sys
-sys.path.append('/home/zolcs/Downloads/quokka/m01_basics/util/create_utils.py')
-from m01b_intermediate.util.create_utils import create_devices
+sys.path.append('/home/zolcs/Downloads/quokka/')
+from m01_basics.util.create_utils import create_devices
 from pprint import pprint
 from collections import namedtuple
 
