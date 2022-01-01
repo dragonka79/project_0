@@ -1,20 +1,41 @@
-from pprint import pprint
-from tabulate import tabulate
+available_ips = set()
+used_ips = set()
 
 
-l = [
-    {'ip': '10.1.1.1',
-    'subnet': '32',
-    'name': 'loopback'},
-    {'ip': '12.12.12.12',
-    'subnet': '24',
-    'name': 'internal'}
-]
+def print_ips():
+    available_ips_list = list(available_ips)
+    used_ips_list = list(used_ips)
 
-print(l, '\n')
-pprint(l)
-print('\n')
+    print()
+    print("        available   used")
+    print(" ----------------   --------------")
+    for avail in available_ips_list:
+        print(f"{avail:>16}", sep='')
+        for i in range(len(used_ips_list)):
+            print(f"{used_ips_list[i]:<16}")
 
-# for (key,value) in l.items():
-    # print(f'{key:>12} : {value:>15}')
-print(tabulate(l, headers = 'keys'))
+if __name__ == '__main__':
+
+    for index in range(180, 200, 3):
+        available_ips.add("10.0.1." + str(index))
+
+    print_ips()
+    while True:
+        ip_address = input("\nEnter IP address to allocate: ")
+        if not ip_address:
+            print("\nExiting 'sets' application")
+            exit()
+
+        if ip_address in available_ips:
+
+            print(f"-- allocated IP address: {ip_address}")
+            available_ips.remove(ip_address)
+            used_ips.add(ip_address)
+
+            print_ips()
+
+            if len(available_ips.intersection(used_ips)) > 0:
+                print("\n-- ERROR! one or more IPs in both sets")
+
+        else:
+            print("-- IP address not found in available IPs\n")
