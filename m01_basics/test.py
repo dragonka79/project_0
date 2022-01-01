@@ -1,6 +1,7 @@
 from pprint import pprint
 from tabulate import tabulate
 
+
 l = [
     {'ip': '10.1.1.1',
     'subnet': '32',
@@ -10,8 +11,9 @@ l = [
     'name': 'internal'}
 ]
 
-print(l)
+print(l, '\n')
 pprint(l)
+print('\n')
 
 # for (key,value) in l.items():
     # print(f'{key:>12} : {value:>15}')
