@@ -3,5 +3,9 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {},
+	"workbench.editor.showTabs": true,
+	"workbench.editor.enablePreview": true
+
 }
