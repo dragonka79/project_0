@@ -21,4 +21,3 @@ pprint(devices_list)
 print('\n')
 print('------    print of the devices in a tabulate format   ----------')
 print('\n', tabulate(devices_list, headers="keys"))
-
