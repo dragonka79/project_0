@@ -15,9 +15,9 @@ for device_index in range(len(d1)):
     device_dict = dict()
     for index, header in enumerate(d0):
         device_dict[header] = d1[device_index][index]
-        devices_list.append(device_dict)
+    devices_list.append(device_dict)
 print('------    pretty print of the devices ----------\n')
-pprint(devices_list)
+pprint(devices_list, sort_dicts=False)
 print('\n')
 print('------    print of the devices in a tabulate format   ----------')
 print('\n', tabulate(devices_list, headers="keys"))
