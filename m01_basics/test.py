@@ -12,7 +12,7 @@ while True:
         else :
             print(f"Congrats, the number was {random_number}")
             break
-    more = input("Do you want to play more?(y/n)")
+    more = input("Do you want to play more?(y/hit any key)")
     if more.lower() == 'y':
         continue
     else:
