@@ -1,3 +1,5 @@
+# https://napalm.readthedocs.io/en/latest/support/
+
 import napalm
 import json
 import copy
@@ -44,7 +46,8 @@ for device_type, device in devices.items():
     print(json.dumps(napalm_device.get_interfaces(), sort_keys=True, indent=4))
 
     print("\n----- vlans ----------")
-    try:
+    try: # handling exception: run the code, but in case of error message, do that
+
         print(json.dumps(napalm_device.get_vlans(), sort_keys=True, indent=4))
     except NotImplementedError as e:
         print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
