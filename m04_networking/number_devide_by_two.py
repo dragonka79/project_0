@@ -1,4 +1,4 @@
-# Dividing an even nmbe by two and returning the value with exception handling.
+# Dividing an even number by two and returning the value with exception handling.
 
 try:
     number = int(input("Give me a number:> "))
