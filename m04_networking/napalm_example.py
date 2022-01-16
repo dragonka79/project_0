@@ -39,35 +39,35 @@ for device_type, device in devices.items():
 
     napalm_device.open()
 
-    # print("\n----- facts ----------")
-    # print(json.dumps(napalm_device.get_facts(), sort_keys=True, indent=4))
+    print("\n----- facts ----------")
+    print(json.dumps(napalm_device.get_facts(), sort_keys=True, indent=4))
 
-    # print("\n----- interfaces ----------")
-    # print(json.dumps(napalm_device.get_interfaces(), sort_keys=True, indent=4))
+    print("\n----- interfaces ----------")
+    print(json.dumps(napalm_device.get_interfaces(), sort_keys=True, indent=4))
 
-    # print("\n----- vlans ----------")
-    # try: # handling exception: run the code, but in case of error message, do that
+    print("\n----- vlans ----------")
+    try: # handling exception: run the code, but in case of error message, do that
 
-    #     print(json.dumps(napalm_device.get_vlans(), sort_keys=True, indent=4))
-    # except NotImplementedError as e:
-    #     print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
+        print(json.dumps(napalm_device.get_vlans(), sort_keys=True, indent=4))
+    except NotImplementedError as e:
+        print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
 
-    # print("\n----- snmp ----------")
-    # print(json.dumps(napalm_device.get_snmp_information(), sort_keys=True, indent=4))
+    print("\n----- snmp ----------")
+    print(json.dumps(napalm_device.get_snmp_information(), sort_keys=True, indent=4))
 
-    # print("\n----- interface counters ----------")
-    # try:
-    #     print(json.dumps(napalm_device.get_interfaces_counters(), sort_keys=True, indent=4))
-    # except NotImplementedError as e:
-    #     print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
+    print("\n----- interface counters ----------")
+    try:
+        print(json.dumps(napalm_device.get_interfaces_counters(), sort_keys=True, indent=4))
+    except NotImplementedError as e:
+        print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
 
-    # print("\n----- environment ----------")
-    # try:
-    #     print(json.dumps(napalm_device.get_environment(), sort_keys=True, indent=4))
-    # except (KeyError, IOError, napalm.pyIOSXR.exceptions.XMLCLIError) as e:
-    #     print(f"oops, looks like there is a NAPALM exception for {device['hostname']}, error: {e}")
+    print("\n----- environment ----------")
+    try:
+        print(json.dumps(napalm_device.get_environment(), sort_keys=True, indent=4))
+    except (KeyError, IOError, napalm.pyIOSXR.exceptions.XMLCLIError) as e:
+        print(f"oops, looks like there is a NAPALM exception for {device['hostname']}, error: {e}")
 
-   # Should be fixed, the format of the output is not correct 
+#    Should be fixed, the format of the output is not correct 
     print("\n----- running config ----------")
     print(json.dumps(napalm_device.get_config(), sort_keys=True, indent=4))
 
