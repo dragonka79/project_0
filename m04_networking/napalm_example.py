@@ -9,10 +9,10 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 IOS = "ios"
-NXOS = "nxos" # used for nx-api 
+NXOS = "nxos" # used for nx-api interface
 NXOS_SSH = "nxos_ssh" # connect using ssh only
 
-devices = copy.deepcopy(cisco_sandbox_devices)
+devices = copy.deepcopy(cisco_sandbox_devices) # a save copy only, not to mess up 'devices' mistakenly
 
 # make a copy of NXOS, so we can do both SSH and NXAPI connections
 # devices[NXOS_SSH] = copy.deepcopy(devices[NXOS])
