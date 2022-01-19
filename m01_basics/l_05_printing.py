@@ -5,9 +5,9 @@ from tabulate import tabulate
 from datetime import datetime
 from time import sleep
 from random import choice
-# import nmap
+import nmap
 
-devices = create_devices(10)
+devices = create_devices(10) # = num_devices=10, num_subnets=1 (default value)
 
 print("\n\nUSING PRINT\n")
 print(devices)
@@ -52,17 +52,17 @@ for device in devices:
     print("done.")
 print("Testing completed")
 
-# nm = nmap.PortScanner()
-# while True:
-#
-#     ip = input("\nInput IP address to scan: ")
-#     if not ip:
-#         break
-#
-#     print(f"\n--- beginning scan of {ip}")
-#     output = nm.scan(ip, '22-1024')
-#     print(f"--- --- command: {nm.command_line()}")
-#
-#     print("----- nmap scan output -------------------")
-#     pprint(output)
+nm = nmap.PortScanner()
+while True:
+
+    ip = input("\nInput IP address to scan: ")
+    if not ip: # if the ip = empty, meaning hitting enter
+        break
+
+    print(f"\n--- beginning scan of {ip}")
+    output = nm.scan(ip, '22-1024')
+    print(f"--- --- command: {nm.command_line()}")
+
+    print("----- nmap scan output -------------------")
+    pprint(output)
 
