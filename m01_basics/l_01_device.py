@@ -21,7 +21,7 @@ print("device name:", device["name"])
 
 print("\n__________ PRETTY PRINT __________________\n")
 
-pprint(device)
+pprint(device, sort_dicts=False)
 
 # For loop, nicely formatted print
 
