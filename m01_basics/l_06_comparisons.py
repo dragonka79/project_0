@@ -93,7 +93,7 @@ devices = create_devices(num_subnets=2, num_devices=25)
 for device in devices:
 
     device["availability"] = randint(94, 100)
-    device["response_time"] = uniform(0.5, 1.1)
+    device["response_time"] = uniform(0.5, 1.1) # Random float number between 0.5 and 1.1
 
     if device["availability"] < SLA_AVAILABILITY:
         print(f"{datetime.now()}: {device['name']:6} - Availability {device['availability']} < {SLA_AVAILABILITY}")
