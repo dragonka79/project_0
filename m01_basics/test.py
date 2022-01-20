@@ -1,10 +1,5 @@
-# Dividing an even nmbe by two and returning the value with exception handling.
+def bar(**kwargs):
+    for a in kwargs:
+        print(a, kwargs[a])  
 
-try:
-    number = int(input("Give me a number:> "))
-    assert number % 2 == 0
-except:
-    print("Not an even number!")
-else:
-    x = int(number / 2)
-    print(x)
+bar(name='one', age=27)
