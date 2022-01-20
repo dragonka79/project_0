@@ -46,7 +46,7 @@ device_info_pairs = [kv_pair.split(":") for kv_pair in device_info_str.split(","
 
 device = {item[0].strip(): item[1].strip() for item in device_info_pairs}
 print("\ndevice using list and dict comprehension:\n\t\t", device)
-print("device nicely formatted:")
+print("\ndevice nicely formatted:")
 for key, value in device.items():
     print(f"{key:>16s} : {value}")
 
