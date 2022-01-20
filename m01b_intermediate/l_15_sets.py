@@ -3,9 +3,16 @@ used_ips = set()
 
 
 def print_ips():
+    # if statement is needed since if used_ips are empty then 
+    # the 'print(f"Used IPs:")' output is 'set()'
+    
+    if len(used_ips) > 0:
 
-    print(f"Available IPs: {available_ips}")
-    print(f"Used IPs:      {used_ips}")
+        print(f"Available IPs:\n{available_ips}")
+        print(f"Used IPs:\n{used_ips}")
+    else:
+        print(f"Available IPs:\n{available_ips}")
+        print(f"Used IPs:")
 
 
 # --- Main program --------------------------------------------
