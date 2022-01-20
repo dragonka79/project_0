@@ -23,7 +23,7 @@ if __name__ == '__main__':
     print("\n----- DEVICE AS TUPLE --------------------")
     device = ("sbx-n9kv-ao", "cisco", "Nexus9000 C9300v Chassis", "nxos", "10.0.1.1")
 
-    print("  name:", device[0])
+    print("  name:", device[0]) # device[0] = referencing to a element using subscript
     print("vendor:", device[1])
     print(" model:", device[2])
     print("    os:", device[3])
