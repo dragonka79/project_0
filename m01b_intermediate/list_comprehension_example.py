@@ -1,4 +1,3 @@
-
 # Non list comprehension way
 
 list1 = list()
@@ -11,4 +10,3 @@ print("list1:",list1)
 
 list2 = [i for i in range(1,5)]
 print("list2:", list2)
-
