@@ -32,7 +32,7 @@ device_info = [
 ]
 
 # DICT COMPREHENSION FROM LIST OF TUPLES
-device = {item[0]: item[1] for item in device_info}
+device = {item[0]: item[1] for item in device_info} # item[0]: item[1] = key: value
 print("\ndevice using dict comprehension:\n\t\t", device)
 print("device nicely formatted:")
 for key, value in device.items():
