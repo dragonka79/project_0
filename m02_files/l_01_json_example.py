@@ -9,9 +9,7 @@ with open("l_00_inventory.json", "w") as json_out:
 # READ JSON INVENTORY FROM FILE
 with open("l_00_inventory.json", "r") as json_in:
     json_inventory = json_in.read()
-
-# PRINT JSON INVENTORY STRING
-print("l_00_inventory.json file:", json_inventory)
+    print(json_inventory)
 
 # CONVERT JSON INVENTORY TO PYTHON, THEN CONVERT BACK TO STRING FOR PRINTING
 # Convert from json to python: loads (load + string)
