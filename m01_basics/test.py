@@ -1,77 +1,40 @@
-# from math import sqrt
-
-# class Pont:
-#     def __init__(self, x = 0, y = 0):
-#         self.x = x
-#         self.y = y
-
-#     def kor_kozeppontja(p1, p2, p3, p4):
-#         m1 = int((p2.y - p1.y) / (p2.x - p1.x))
-#         c1 = int(((p1.y * p2.x) - (p2.y * p1.x)) / (p2.x - p1.x))
-#         m2 = int((p4.y - p3.y) / (p4.x - p3.x))
-#         c2 = int(((p3.y * p4.x) - (p4.y * p3.x)) / (p4.x - p3.x))
-#         u = int((c2 - c1) / (m1 - m2))
-#         v = int((c2 * m1 - c1 *m2) / (m1 - m2))
-#         return (u,v)
 
 
-# p1 = Pont(0, 1 + sqrt(5))
-# p2 = Pont(1, 1 + (2 * sqrt(2)))
-# p3 = Pont(-1, 1)
-# p4 = Pont(2, 4)
 
-# print(Pont.kor_kozeppontja(p1, p2, p3, p4))
-
-
-from math import sqrt
-
-class Pont:
-    def __init__(self, x = 0, y = 0):
-        self.x = x
-        self.y = y
-    
-    def felezopont(p1, p2):
-        fx = int((p1.x + p2.x) / 2)
-        fy = int((p1.y + p2.y) / 2)
-        return (fx, fy)
-
-    def normalvektor(p1, p2):
-        n2 = int(p2.x - p1.x)
-        n1 = int(-p2.y + p1.y)
-        return int(n1 / n2)
-    
-    def egyenes(p1, p2):
-        m = -1 * Pont.normalvektor(p1, p2)
-        c = (Pont.normalvektor(p1, p2) * Pont.felezopont(p1, p2)[0] + 
-            Pont.felezopont(p1, p2)[1])
-        return (m, c)
-
-    def kor_kozeppontja(p1, p2, p3, p4):
-        m1 = int((p2.y - p1.y) / (p2.x - p1.x))
-        c1 = int(((p1.y * p2.x) - (p2.y * p1.x)) / (p2.x - p1.x))
-        m2 = int((p4.y - p3.y) / (p4.x - p3.x))
-        c2 = int(((p3.y * p4.x) - (p4.y * p3.x)) / (p4.x - p3.x))
-        # u = int((c2 - c1) / (m1 - m2))
-        u = int(Pont.egyenes(p3, p4)[1] - Pont.egyenes(p1, p2)[1] / 
-                Pont.egyenes(p1, p2)[0] - Pont.egyenes(p3, p4)[0])
-        # v = int((c2 * m1 - c1 *m2) / (m1 - m2))
-        v = int((Pont.egyenes(p3, p4)[1] * Pont.egyenes(p1, p2)[0] - 
-                Pont.egyenes(p1, p2)[1] * Pont.egyenes(p3, p4)[0]) / 
-                Pont.egyenes(p1, p2)[0] - Pont.egyenes(p3, p4)[0])
-        return (u,v)
+class SMS_tarolo():
+    def beerkezo_uzenet_hozzaadasa(kuldo_szama, erkezesi_ido, SMS_szovege):
+        olvasott_e = True
+        uzenet = (olvasott_e, kuldo_szama, erkezesi_ido, SMS_szovege)
+        bejovo_uzenetek.append(uzenet)
+        return bejovo_uzenetek
+        
 
 
-# p1 = Pont(3, -3)
-# p2 = Pont(1, 1)
-# p3 = Pont(-1, 1)
-# p4 = Pont(2, 4)
+#   # Készít egy új rendezett 4-est az SMS számára,
+#   # és beszúrja őket a tárolóba a többi üzenet után.
+#   # Az üzenet készítésénél az olvasott_e állapotát
+#   #    hamisra (False) állítja.
 
-p1 = Pont(0, 1 + sqrt(5))
-p2 = Pont(-1, 1)
-p3 = Pont(1, 1 + (2 * sqrt(2)))
-p4 = Pont(2, 4)
+# bejovo_uzenetek.uzenetek_szama()
+#   # Visszatér a bejovo_uzenetek tárolóban lévő SMS-ek számával
 
-# print(Pont.felezopont(p1, p2))
-# print(Pont.normalvektor(p1, p2))
-# print(Pont.egyenes(p1, p2))
-print(Pont.kor_kozeppontja(p1, p2, p3, p4))
+# bejovo_uzenetek.olvasatlan_uzenetek_indexeinek_lekerese()
+#   # Visszatér az összes olvasatlan SMS indexét tartalmazó listával.
+
+# bejovo_uzenetek.uzenet_lekerese(i)
+#   # Visszatér az uzenet[i]-hez tartozó (kuldo_szama, erkezesi_ido, SMS_szovege) 4-essel.
+#   # Az üzenet státuszát olvasottra állítja.
+#   # Ha nincs üzenet az i. indexen, akkor a visszatérési érték None.
+
+# bejovo_uzenetek.torol(i)     # Kitörli az i. pozícióban álló üzenetet.
+# bejovo_uzenetek.mindent_torol()   # Kitörli az összes üzenetet a bejövő SMS-ek tárolójából.
+
+bejovo_uzenetek = []
+
+olvasott_e = False
+kuldo_szama = '06305645575'
+erkezesi_ido = '2022.01.28.05:30'
+SMS_szovege = 'Hello, szia, szevasz'
+
+print(SMS_tarolo.beerkezo_uzenet_hozzaadasa(
+    kuldo_szama, erkezesi_ido, SMS_szovege))
