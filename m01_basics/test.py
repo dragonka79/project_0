@@ -1,40 +1,62 @@
 
 
+class Pont:
+    def __init__(self, x = 0, y = 0):
+        self.x = x
+        self.y = y
 
-class SMS_tarolo():
-    def beerkezo_uzenet_hozzaadasa(kuldo_szama, erkezesi_ido, SMS_szovege):
-        olvasott_e = True
-        uzenet = (olvasott_e, kuldo_szama, erkezesi_ido, SMS_szovege)
-        bejovo_uzenetek.append(uzenet)
-        return bejovo_uzenetek
-        
+    def __str__(self):
+        return "({0}, {1})".format(self.x, self.y)
 
 
-#   # Készít egy új rendezett 4-est az SMS számára,
-#   # és beszúrja őket a tárolóba a többi üzenet után.
-#   # Az üzenet készítésénél az olvasott_e állapotát
-#   #    hamisra (False) állítja.
+class Teglalap:
+    def __init__(self, poz, sz, m):
+        self.csucs = poz
+        self.szelesseg = sz
+        self.magassag = m
 
-# bejovo_uzenetek.uzenetek_szama()
-#   # Visszatér a bejovo_uzenetek tárolóban lévő SMS-ek számával
+    def __str__(self):
+        return "({0}, {1}, {2})".format(
+            self.csucs, self.szelesseg, self.magassag
+            )
+    
+    def noveles(self, delta_szelesseg, delta_magassag):
+        self.szelesseg += delta_szelesseg
+        self.magassag += delta_magassag
+    
+    def mozgatas(self, dx, dy):
+        self.csucs.x += dx
+        self.csucs.y += dy
+    
+    def terulet(self):
+        return(self.szelesseg * self.magassag)
 
-# bejovo_uzenetek.olvasatlan_uzenetek_indexeinek_lekerese()
-#   # Visszatér az összes olvasatlan SMS indexét tartalmazó listával.
+    def kerulet(self):
+        return(2 * (self.szelesseg + self.magassag))
+    
+    def forditas(self):
+        (self.szelesseg, self.magassag) = (self.magassag, self.szelesseg)
+    
+    def tartalmazza_e(self, p1):
+        self.x1 = self.csucs.x + self.magassag
+        self.y1 = self.csucs.y + self.szelesseg
+        s = ((p1.x < self.x1 and p1.x >= self.csucs.x) and 
+            (p1.y < self.y1 and p1.y >= self.csucs.y))
+        return s
 
-# bejovo_uzenetek.uzenet_lekerese(i)
-#   # Visszatér az uzenet[i]-hez tartozó (kuldo_szama, erkezesi_ido, SMS_szovege) 4-essel.
-#   # Az üzenet státuszát olvasottra állítja.
-#   # Ha nincs üzenet az i. indexen, akkor a visszatérési érték None.
+r = Teglalap(Pont(0, 0), 10, 5)
+print(r.tartalmazza_e(Pont(0, 0)))
 
-# bejovo_uzenetek.torol(i)     # Kitörli az i. pozícióban álló üzenetet.
-# bejovo_uzenetek.mindent_torol()   # Kitörli az összes üzenetet a bejövő SMS-ek tárolójából.
+print(r.tartalmazza_e(Pont(3, 3)))
 
-bejovo_uzenetek = []
+print(not r.tartalmazza_e(Pont(3, 7)))
 
-olvasott_e = False
-kuldo_szama = '06305645575'
-erkezesi_ido = '2022.01.28.05:30'
-SMS_szovege = 'Hello, szia, szevasz'
+print(not r.tartalmazza_e(Pont(3, 5)))
 
-print(SMS_tarolo.beerkezo_uzenet_hozzaadasa(
-    kuldo_szama, erkezesi_ido, SMS_szovege))
+print(r.tartalmazza_e(Pont(3, 4.99999)))
+
+print(not r.tartalmazza_e(Pont(-3, -3)))
+
+
+
+
