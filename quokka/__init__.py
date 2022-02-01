@@ -1,33 +1,10 @@
 from flask import Flask
-import yaml
+
 
 app = Flask(__name__)
 
-def import_devices():
-    with open ("quokka/data/devices.yaml") as devices_file:
-        devices = yaml.safe_load(devices_file.read())
-        return devices
-
-
-@app.route("/devices/")
-def devices():
-    devices = import_devices()
-    return {'devices': devices}
-
-# from flask import Flask
-
-# app = Flask(__name__)
-
-# @app.route("/device/")
-# def hello_world():
-#     device = {
-#         "name": "sbx-n9kv-ao",
-#         "vendor": "cisco",
-#         "model": "Nexus9000 C9300c Chassis",
-#         "os": "nxos",
-#         "version": "9.3(3)",
-#         "ip": "10.1.1.1",
-
-#     }
-#     return device
-    # return "<p>Hello, zaultschy!</p>"
+import quokka.views.ui_views
+# A fenti import azért kell az 'app' def alá, hogy a körkörös importot
+# feloldjuk; ha az app fölött lenne, akkor a ui_views importjában az app-ot
+# importálja de még azelőtt, hogy az app létre lett volna hívva.
+# QFS-03 26-ik perc
