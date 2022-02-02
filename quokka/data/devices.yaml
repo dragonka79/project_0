@@ -3,40 +3,40 @@
   ip_address:
   name: CSR-latest-sandbox
   os: iosxe
-  transport: napalm
+  # transport: napalm
   hostname: ios-xe-mgmt-latest.cisco.com
-  password: C1sco12345
-  ssh_port: 8181
-  username: developer
+  # password: C1sco12345
+  # ssh_port: 8181
+  # username: developer
   vendor: cisco
-  sla_availability: 95
-  sla_response_time: 15
+  # sla_availability: 95
+  #sla_response_time: 15
 
 - id: 2
   ip_address:
   name: CSR-sandbox
   os: iosxe
-  transport: napalm
+  # transport: napalm
   hostname: ios-xe-mgmt.cisco.com
-  password: C1sco12345
-  ssh_port: 8181
-  username: developer
+  # password: C1sco12345
+  # ssh_port: 8181
+  # username: developer
   vendor: cisco
-  sla_availability: 95
-  sla_response_time: 15
+  # sla_availability: 95
+  # sla_response_time: 15
 
 - id: 3
   ip_address:
   name: NXOS-sandbox (SSH)
   os: nxos-ssh
-  transport: napalm
+  # transport: napalm
   hostname: sbx-nxos-mgmt.cisco.com
-  password: Admin_1234!
-  ssh_port: 8181
-  username: admin
+  # password: Admin_1234!
+  # ssh_port: 8181
+  # username: admin
   vendor: cisco
-  sla_availability: 95
-  sla_response_time: 15
+  # sla_availability: 95
+  # sla_response_time: 15
 
 #- id: 4
 #  ip_address:
@@ -54,15 +54,15 @@
   ip_address:
   name: CSR-sandbox (NETCONF)
   os: iosxe
-  transport: ncclient
+  # transport: ncclient
   hostname: ios-xe-mgmt.cisco.com
-  password: C1sco12345
-  ncclient_name: csr
-  netconf_port: 10000
-  username: developer
+  # password: C1sco12345
+  # ncclient_name: csr
+  # netconf_port: 10000
+  # username: developer
   vendor: cisco
-  sla_availability: 95
-  sla_response_time: 15
+  # sla_availability: 95
+  # sla_response_time: 15
 
 #- id: 6
 #  ip_address:
