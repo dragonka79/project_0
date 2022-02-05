@@ -1,4 +1,4 @@
-from ncclient import manager
+from ncclient import manager # ncclient is used for the comm. with the device
 from lxml import etree
 import xmltodict
 from pprint import pprint
@@ -49,7 +49,7 @@ for device in [nxos_device, iosxr_device]:
         serial_number_xml_nxos = '<System xmlns="http://cisco.com/ns/yang/cisco-nx-os-device"><serial/></System>'
 
         rsp = nc_connection.get(("subtree", serial_number_xml_nxos))
-        print(f"\n----- XML get() serial number subtree from: {device['host']}")
+        print(f"\n----- XML get() serial number subtree from: {device['host']}\n")
         print(str(etree.tostring(rsp.data_ele, pretty_print=True).decode()))
 
     # elif device["device_params"]["name"] == "csr":
@@ -60,6 +60,8 @@ for device in [nxos_device, iosxr_device]:
         print(f"\n----- XML get_config() output from: {device['host']}")
         print(str(etree.tostring(config.data_ele, pretty_print=True).decode()))
 
+        # commented starts
+
         # xml_doc = parseString(str(config))
         # version = xml_doc.getElementsByTagName("version")
         # print(f"\n----- Device OS version, hostname, email from: {device['host']}")
@@ -67,19 +69,19 @@ for device in [nxos_device, iosxr_device]:
         #     print(f"        version: {version[0].firstChild.nodeValue}")
         # else:
         #     print(f"        Unable to retrieve version!")
-        #
+        
         # hostname = xml_doc.getElementsByTagName("hostname")
         # if len(hostname) > 0:
         #     print(f"        hostname: {hostname[0].firstChild.nodeValue}")
         # else:
         #     print(f"        Unable to retrieve hostname!")
-        #
+        
         # email = xml_doc.getElementsByTagName("contact-email-addr")
         # if len(email) > 0:
         #     print(f"        email: {email[0].firstChild.nodeValue}")
         # else:
         #     print(f"        Unable to retrieve email!")
-        #
+        
         # usernames = xml_doc.getElementsByTagName("username")
         # for username in usernames:
         #     name = username.getElementsByTagName("name")
@@ -87,7 +89,7 @@ for device in [nxos_device, iosxr_device]:
         #         print(f"        name: {name[0].firstChild.nodeValue}")
         #     else:
         #         print(f"        Unable to retrieve name from username!")
-        #
+        
         # version_filter = """
         #                     <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
         #                         <version></version>
@@ -96,35 +98,37 @@ for device in [nxos_device, iosxr_device]:
         # rsp = nc_connection.get(("subtree", version_filter))
         # print(f"\n----- XML get() version subtree from: {device['host']}")
         # print(str(etree.tostring(rsp.data_ele, pretty_print=True).decode()))
-        #
+        
         # cpu_filter = """
         #                   <filter>
         #                     <cpu-usage xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-process-cpu-oper">
         #                     </cpu-usage>
         #                   </filter>
         #                 """
-        #
+        
         # rsp = nc_connection.get(cpu_filter)
         # print(f"\n----- XML get() cpu subtree from: {device['host']}")
         # print(str(etree.tostring(rsp.data_ele, pretty_print=True).decode()))
-        #
+        
         # memory_filter = """
         #                   <filter>
         #                     <memory-statistics xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-memory-oper">
         #                     </memory-statistics>
         #                   </filter>
         #                 """
-        #
+        
         # rsp = nc_connection.get(memory_filter)
         # print(f"\n----- XML get() memory subtree from: {device['host']}")
         # print(str(etree.tostring(rsp.data_ele, pretty_print=True).decode()))
-        #
+        
         # memory_statistics = xmltodict.parse(
         #     str(etree.tostring(rsp.data_ele, pretty_print=True).decode()),
         #     dict_constructor=dict,
         # )
         # print("\n----- Memory statistics --------------------\n")
         # pprint(memory_statistics)
+
+        # commented ends
 
         config_python = xmltodict.parse(
             str(etree.tostring(config.data_ele, pretty_print=True).decode()),
