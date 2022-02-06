@@ -1,62 +1,65 @@
+import pyshark
 
 
-class Pont:
-    def __init__(self, x = 0, y = 0):
-        self.x = x
-        self.y = y
-
-    def __str__(self):
-        return "({0}, {1})".format(self.x, self.y)
+def print_packet_summary(pkt):
+    print(4 * ' ', str(pkt)[:120])
 
 
-class Teglalap:
-    def __init__(self, poz, sz, m):
-        self.csucs = poz
-        self.szelesseg = sz
-        self.magassag = m
+# CAPTURE EVERYTHING AND PRINT PACKET SUMMARIES
+print("\n\t\t\t+++ Packet summaries +++\n")
+capture = pyshark.LiveCapture(interface='ens33', only_summaries=True)
+capture.sniff(packet_count=15) # It starts to capture here
+for packet in capture:
+    print_packet_summary(packet)
 
-    def __str__(self):
-        return "({0}, {1}, {2})".format(
-            self.csucs, self.szelesseg, self.magassag
-            )
-    
-    def noveles(self, delta_szelesseg, delta_magassag):
-        self.szelesseg += delta_szelesseg
-        self.magassag += delta_magassag
-    
-    def mozgatas(self, dx, dy):
-        self.csucs.x += dx
-        self.csucs.y += dy
-    
-    def terulet(self):
-        return(self.szelesseg * self.magassag)
+# CAPTURE DNS AND PRINT PACKETS
+print("\n\t\t\t+++ DNS packet summaries +++\n")
+capture = pyshark.LiveCapture(interface='ens33', only_summaries=True, 
+                              bpf_filter='udp port 53')
+capture.sniff(packet_count=15)
+for packet in capture:
+    print_packet_summary(packet)
 
-    def kerulet(self):
-        return(2 * (self.szelesseg + self.magassag))
-    
-    def forditas(self):
-        (self.szelesseg, self.magassag) = (self.magassag, self.szelesseg)
-    
-    def tartalmazza_e(self, p1):
-        self.x1 = self.csucs.x + self.magassag
-        self.y1 = self.csucs.y + self.szelesseg
-        s = ((p1.x < self.x1 and p1.x >= self.csucs.x) and 
-            (p1.y < self.y1 and p1.y >= self.csucs.y))
-        return s
+# CAPTURE AND PRINT COMPLETE PACKETS
+print("\n\t\t\t+++ All packets, complete +++\n")
+capture = pyshark.LiveCapture(interface='ens33')
+capture.sniff(packet_count=10)
+for packet in capture:
+    print(packet)
 
-r = Teglalap(Pont(0, 0), 10, 5)
-print(r.tartalmazza_e(Pont(0, 0)))
+# CAPTURE AND HANDLE HTTPS PACKETS AS THEY ARRIVE
+print("\n\t\t\t+++ Print packets as they are detected +++\n")
+capture = pyshark.LiveCapture(interface='ens33', only_summaries=True, 
+                              bpf_filter='tcp port https')
+capture.apply_on_packets(print_packet_summary, packet_count=10)
 
-print(r.tartalmazza_e(Pont(3, 3)))
+# CAPTURE AND HANDLE PACKETS AS THEY ARRIVE USING LAMBDA
+print("\n\t\t\t+++ Print packets as they are detected (lambda version) +++\n")
+capture = pyshark.LiveCapture(interface='ens33', only_summaries=True, 
+                              bpf_filter='tcp port https')
+capture.apply_on_packets(lambda pkt: print("lambda    ", str(pkt)[:114]), 
+                         packet_count=10)
 
-print(not r.tartalmazza_e(Pont(3, 7)))
+# USE sniff_continuously() TO CAPTURE PACKETS AND HANDLE AS THEY ARRIVE
+# Same as .sniff, but using generator
+print("\n\t\t\t+++ Print packets as they arrive with sniff_continuously() +++\n")
+capture = pyshark.LiveCapture(interface='ens33', only_summaries=True, 
+                              bpf_filter='tcp port https')
+for packet in capture.sniff_continuously(packet_count=10):
+    print_packet_summary(packet)
 
-print(not r.tartalmazza_e(Pont(3, 5)))
+# ALLOW USER TO ENTER BPF FILTER
+print("\n\t\t\t+++ Input and use BPF filter from user +++\n")
+while True:
 
-print(r.tartalmazza_e(Pont(3, 4.99999)))
+    bpf_filter = input("\n\nEnter BPF filter:  ")
+    if not bpf_filter:
+        break
 
-print(not r.tartalmazza_e(Pont(-3, -3)))
-
-
-
-
+    print(f"\n\t\t\t+++ capturing packets with BPF filter: {bpf_filter}")
+    capture = pyshark.LiveCapture(interface='ens33', only_summaries=True, 
+                                  bpf_filter=bpf_filter)
+    try:
+        capture.apply_on_packets(print_packet_summary, packet_count=10)
+    except KeyboardInterrupt as e:
+        continue
