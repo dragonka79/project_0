@@ -11,7 +11,7 @@ def create_devices():
         device_type=DeviceType.CISCO_NXOS,
         transport=TransportType.NETMIKO,
     )
-    created_devices["nxos-netmiko"].set_port(8181)
+    created_devices["nxos-netmiko"].set_port(8181) # Modify port
     created_devices["nxos-netmiko"].set_credentials(username="admin",
                                                     password="Admin_1234!")
 
