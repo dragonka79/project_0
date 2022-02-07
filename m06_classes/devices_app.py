@@ -12,7 +12,8 @@ def create_devices():
         transport=TransportType.NETMIKO,
     )
     created_devices["nxos-netmiko"].set_port(8181)
-    created_devices["nxos-netmiko"].set_credentials(username="admin", password="Admin_1234!")
+    created_devices["nxos-netmiko"].set_credentials(username="admin",
+                                                    password="Admin_1234!")
 
     created_devices["nxos-napalm"] = Device(
         name="nxos-napalm",
@@ -21,7 +22,8 @@ def create_devices():
         transport=TransportType.NAPALM,
     )
     created_devices["nxos-napalm"].set_port(8181)
-    created_devices["nxos-napalm"].set_credentials(username="admin", password="Admin_1234!")
+    created_devices["nxos-napalm"].set_credentials(username="admin",
+                                                   password="Admin_1234!")
 
     created_devices["nxos-ncclient"] = Device(
         name="nxos-ncclient",
@@ -30,7 +32,8 @@ def create_devices():
         transport=TransportType.NCCLIENT,
     )
     created_devices["nxos-ncclient"].set_port(10000)
-    created_devices["nxos-ncclient"].set_credentials(username="admin", password="Admin_1234!")
+    created_devices["nxos-ncclient"].set_credentials(username="admin",
+                                                     password="Admin_1234!")
 
     return created_devices
 
@@ -38,7 +41,7 @@ def create_devices():
 devices = create_devices()
 for _, device in devices.items():
 
-    if not device.connect():
+    if not device.connect(): # If the connection is not successfull, then:
         print(f"----- Connection failed: {device.name}")
         continue
 
