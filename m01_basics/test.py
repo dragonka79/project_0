@@ -1,0 +1,139 @@
+class TransportType:
+    NAPALM = "napalm"
+
+class DeviceType:
+    IOS = "ios"
+    NXOS = "nxos"
+    NXOS_SSH = "nxos_ssh" # Only for NAPALM
+    NEXUS = "nexus"
+    CISCO_NXOS = "cisco_nxos"
+
+##########################
+
+# NOTE: this will disable insecure HTTPS request warnings that NAPALM gets
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+import napalm
+
+def connect_napalm(hostname, username, password, port, device_type):
+
+    driver = napalm.get_network_driver(device_type)
+    if device_type == DeviceType.NXOS:
+        napalm_device = driver(
+            hostname=hostname,
+            username=username,
+            password=password,
+        )
+    elif device_type == DeviceType.IOS or device_type == DeviceType.NXOS_SSH:
+        napalm_device = driver(
+            hostname=hostname,
+            username=username,
+            password=password,
+            optional_args={"port": port},
+        )
+    else:
+        return None
+
+    print(f"\n\n----- Connecting to {hostname}:{port}")
+    napalm_device.open()
+    print(f"----- Connected! --------------------")
+
+    return napalm_device
+
+
+def disconnect_napalm(connection):
+    connection.close()
+    print(f"----- Disconnected! --------------------")
+
+############################
+
+import re
+import xmltodict
+
+
+def get_facts_napalm(connection):
+
+    return connection.get_facts()
+
+
+########################################
+
+
+
+class Device:
+    def __init__(self, name, device_type, hostname, transport):
+        self.name = name
+        self.hostname = hostname
+        self.transport = transport
+        self.device_type = device_type
+
+        self.mac = None
+        self.ip = None
+        self.connection = None
+
+        self.username = None
+        self.password = None
+        self.port = None
+
+    def set_credentials(self, username, password):
+        self.username = username
+        self.password = password
+
+    def set_port(self, port):
+        self.port = port
+
+    def connect(self):
+
+        if self.transport == TransportType.NAPALM:
+            self.connection = connect_napalm(
+                self.hostname, self.username, self.password, self.port, self.device_type
+            )
+
+        return True
+
+    def get_facts(self):
+
+        if self.transport == TransportType.NAPALM:
+            return get_facts_napalm(self.connection)
+
+        return None
+
+    def disconnect(self):
+
+        if self.transport == TransportType.NAPALM:
+            disconnect_napalm(self.connection)
+
+        return
+
+##########################x
+
+from pprint import pprint
+
+def create_devices():
+    created_devices = dict()
+
+    created_devices["nxos-napalm"] = Device(
+        name="nxos-napalm",
+        hostname="sbx-nxos-mgmt.cisco.com",
+        device_type=DeviceType.NXOS,
+        transport=TransportType.NAPALM,
+    )
+    created_devices["nxos-napalm"].set_port(8181)
+    created_devices["nxos-napalm"].set_credentials(username="admin",
+                                                   password="Admin_1234!")
+
+    return created_devices
+
+devices = create_devices()
+for _, device in devices.items():
+
+    if not device.connect(): # If the connection is not successfull, then:
+        print(f"----- Connection failed: {device.name}")
+        continue
+
+    facts = device.get_facts()
+    print(f"----- Facts for device: {device.name}")
+    pprint(facts)
+
+    device.disconnect()
