@@ -72,9 +72,9 @@ class Device:
         self.ip = None
         self.connection = None
 
-        self.username = None
-        self.password = None
-        self.port = None
+        # self.username = None
+        # self.password = None
+        # self.port = None
 
     def set_credentials(self, username, password):
         self.username = username
@@ -125,8 +125,7 @@ def create_devices():
 
     return created_devices
 
-devices = create_devices()
-for _, device in devices.items():
+for _, device in create_devices().items():
 
     if not device.connect(): # If the connection is not successfull, then:
         print(f"----- Connection failed: {device.name}")
