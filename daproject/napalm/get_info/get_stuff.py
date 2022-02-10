@@ -5,9 +5,9 @@ import json
 import copy
 from devices import sandbox_devices
 from pprint import pprint
-
-# NOTE: this will disable insecure HTTPS request warnings that NAPALM gets
 import urllib3
+
+# this will disable insecure HTTPS request warning messages
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
