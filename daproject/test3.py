@@ -11,67 +11,76 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-IOS = "ios"
-NXOS = "nxos" # connect to Nexus, used for nx-api interface (port 80 and 443)
-NXOS_SSH = "nxos_ssh" # connect to Nexus using ssh only
+NS = " This cannot be retrieved, might be not supported for"
 
+def ns():
+    return print(f"{NS} {device['hostname']}:{device['port']}, error: {e}\n")
 
 devices_copy = copy.deepcopy(sandbox_devices)  # a save copy only
 
-# make a copy of NXOS, so we can do both SSH and NXAPI connections
-devices_copy[NXOS_SSH] = copy.deepcopy(sandbox_devices[NXOS])
-pprint(devices_copy)
+pprint(devices_copy, sort_dicts=False)
 
-for device_type, device in devices_copy.items():
+for os, device in devices_copy.items():
 
-    print(f"\n----- connecting to device {device_type}: {device['hostname']} ----------")
-    driver = napalm.get_network_driver(device_type)
-    if device_type == "nxos": # Not using the port
-        napalm_device = driver(
-            hostname=device["hostname"],
-            username=device["username"],
-            password=device["password"],
-        )
-    else:
-        napalm_device = driver(
-            hostname=device["hostname"],
-            username=device["username"],
-            password=device["password"],
-            optional_args={"port": device["port"]},
+    print(f"\n +++ connecting to device {os}: {device['hostname']} +++")
+    driver = napalm.get_network_driver(os)
+    napalm_device = driver(
+        hostname=device["hostname"],
+        username=device["username"],
+        password=device["password"],
+        optional_args={"port": device["port"]},
         )
 
     napalm_device.open()
 
-    print("\n----- facts ----------")
-    print(json.dumps(napalm_device.get_facts(), sort_keys=True, indent=4))
+    print("\n    +++ Is the connection established?... +++")
+    print(json.dumps(napalm_device.is_alive(), 
+            sort_keys=True, indent=4))
 
-    print("\n----- interfaces ----------")
-    print(json.dumps(napalm_device.get_interfaces(), sort_keys=True, indent=4))
+    print("\n    +++ Gathering facts... +++")
+    print(json.dumps(napalm_device.get_facts(), 
+            sort_keys=True, indent=4))
 
-    print("\n----- vlans ----------")
-    try: # handling exception: run the code, but in case of error message, do that
+    print("\n    +++ Gathering interface informations... +++")
+    print(json.dumps(napalm_device.get_interfaces(), 
+            sort_keys=True, indent=4))
 
-        print(json.dumps(napalm_device.get_vlans(), sort_keys=True, indent=4))
+    print("\n    +++ Gathering vlan informations... +++")
+    try: 
+        print(json.dumps(napalm_device.get_vlans(), 
+            sort_keys=True, indent=4))
     except NotImplementedError as e:
-        print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
+        ns()
 
-    print("\n----- snmp ----------")
-    print(json.dumps(napalm_device.get_snmp_information(), sort_keys=True, indent=4))
+    print("\n    +++ Gathering snmp informations... +++")
+    print(json.dumps(napalm_device.get_snmp_information(), 
+            sort_keys=True, indent=4))
 
-    print("\n----- interface counters ----------")
+    print("\n    +++ Gathering interface counters... +++\n")
     try:
-        print(json.dumps(napalm_device.get_interfaces_counters(), sort_keys=True, indent=4))
-    except NotImplementedError as e:
-        print(f"oops, looks like this isn't implemented for {device['hostname']}, error: {e}")
+        print(json.dumps(napalm_device.get_interfaces_counters(), 
+            sort_keys=True, indent=4))
+    except Exception as e:
+        ns()
 
-    print("\n----- environment ----------")
+    print("\n    +++ Gathering environment informations... +++\n")
     try:
-        print(json.dumps(napalm_device.get_environment(), sort_keys=True, indent=4))
-    except (KeyError, IOError, napalm.pyIOSXR.exceptions.XMLCLIError) as e:
-        print(f"oops, looks like there is a NAPALM exception for {device['hostname']}, error: {e}")
+        print(json.dumps(napalm_device.get_environment(), 
+            sort_keys=True, indent=4))
+    except Exception as e:
+        ns()
+    
+    print("\n    +++ Gathering users... +++")
+    print(json.dumps(napalm_device.get_users(), 
+            sort_keys=True, indent=4))
+      
+    print("\n    +++ Gathering NTP servers... +++")
+    print(json.dumps(napalm_device.get_ntp_servers(), 
+            sort_keys=True, indent=4))
 
 #    Should be fixed, the format of the output is not correct 
-    print("\n----- running config ----------")
+    print("\n    +++ Getting the running configuration... +++")
     print(json.dumps(napalm_device.get_config(), sort_keys=True, indent=4))
+
 
     napalm_device.close()

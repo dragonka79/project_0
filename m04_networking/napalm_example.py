@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 IOS = "ios"
-NXOS = "nxos" # connect to Nexus, used for nx-api interface (port 80 and 443)
+NXOS = "nxos" # used for nx-api interface (port 80 and 443)
 NXOS_SSH = "nxos_ssh" # connect to Nexus using ssh only
 
 # a save copy only, not to mess up 'devices' mistakenly
