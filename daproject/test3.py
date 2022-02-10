@@ -15,19 +15,18 @@ IOS = "ios"
 NXOS = "nxos" # connect to Nexus, used for nx-api interface (port 80 and 443)
 NXOS_SSH = "nxos_ssh" # connect to Nexus using ssh only
 
-# a save copy only, not to mess up 'devices' mistakenly
-devices_copy = copy.deepcopy(sandbox_devices) 
+
+devices_copy = copy.deepcopy(sandbox_devices)  # a save copy only
 
 # make a copy of NXOS, so we can do both SSH and NXAPI connections
 devices_copy[NXOS_SSH] = copy.deepcopy(sandbox_devices[NXOS])
-devices_copy[NXOS_SSH]["port"] = "22"
 pprint(devices_copy)
 
 for device_type, device in devices_copy.items():
 
     print(f"\n----- connecting to device {device_type}: {device['hostname']} ----------")
     driver = napalm.get_network_driver(device_type)
-    if device_type == NXOS:
+    if device_type == "nxos": # Not using the port
         napalm_device = driver(
             hostname=device["hostname"],
             username=device["username"],

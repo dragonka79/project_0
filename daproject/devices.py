@@ -15,7 +15,7 @@ sandbox_devices = {
     },
     "nxos": {
         "hostname": "sandbox-nxos-1.cisco.com",
-        "port": 443,
+        "port": 22,
         "username": "admin",
         "password": "Admin_1234!",
         "device_type": "cisco_nxos",
