@@ -1,34 +1,18 @@
-class DeviceType:
-
-    NEXUS = "nexus"
-    CISCO_NXOS = "cisco_nxos"
-
-##########################
-
 # NOTE: this will disable insecure HTTPS request warnings that NAPALM gets
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 import napalm
 
-def connect_napalm(hostname, username, password, port, device_type):
+def connect_napalm(hostname, username, password, port):
 
-    driver = napalm.get_network_driver(device_type)
-    if device_type == "nxos":
-        napalm_device = driver(
+    driver = napalm.get_network_driver()
+    napalm_device = driver(
             hostname=hostname,
             username=username,
             password=password,
+            port=port
         )
-    elif device_type == "ios" or device_type == "nxos_ssh":
-        napalm_device = driver(
-            hostname=hostname,
-            username=username,
-            password=password,
-            optional_args={"port": port},
-        )
-    else:
-        return None
 
     print(f"\n\n----- Connecting to {hostname}:{port}")
     napalm_device.open()
@@ -43,38 +27,17 @@ def disconnect_napalm(connection):
 
 ############################
 
-import re
-import xmltodict
-
-
 def get_facts_napalm(connection):
 
     return connection.get_facts()
 
-
 ########################################
 
-
-
 class Device:
-    def __init__(self, name, device_type, hostname):
-        self.name = name
+    def __init__(self, hostname, username, password, port):
         self.hostname = hostname
-        self.device_type = device_type
-
-        self.mac = None
-        self.ip = None
-        self.connection = None
-
-        # self.username = None
-        # self.password = None
-        # self.port = None
-
-    def set_credentials(self, username, password):
         self.username = username
         self.password = password
-
-    def set_port(self, port):
         self.port = port
 
     def connect(self):
@@ -84,8 +47,7 @@ class Device:
             self.username, 
             self.password, 
             self.port, 
-            self.device_type
-            )
+        )
 
         return True
 
@@ -107,13 +69,11 @@ def create_devices():
     created_devices = dict()
 
     created_devices["nxos-napalm"] = Device(
-        name="nxos-napalm",
         hostname="sandbox-nxos-1.cisco.com",
-        device_type="nxos"
+        username="admin",
+        password="Admin_1234!",
+        port="22"
     )
-    created_devices["nxos-napalm"].set_port(8181)
-    created_devices["nxos-napalm"].set_credentials(username="admin",
-                                                   password="Admin_1234!")
 
     return created_devices
 
@@ -121,7 +81,7 @@ for _, device in create_devices().items():
 
     if not device.connect(): # If the connection is not successfull, then:
         print(f"----- Connection failed: {device.name}")
-        continue
+        break
 
     facts = device.get_facts()
     print(f"----- Facts for device: {device.name}")
