@@ -20,7 +20,7 @@ def create_devices():
         hostname="sbx-nxos-mgmt.cisco.com",
         device_type=DeviceType.NXOS,
     )
-    created_devices["nxos-napalm"].set_port(8181)
+    created_devices["nxos-napalm"].set_port(443)
     created_devices["nxos-napalm"].set_credentials(username="admin", password="Admin_1234!")
 
     # created_devices["nxos-ncclient"] = NcclientDevice(
