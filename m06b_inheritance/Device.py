@@ -1,5 +1,7 @@
-class Device:
+# This is the base class and the subclassses written for the specific APIs 
+# use it
 
+class Device: 
     def __init__(self, name, device_type, hostname):
         self.name = name
         self.hostname = hostname

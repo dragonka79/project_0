@@ -7,13 +7,13 @@ from pprint import pprint
 
 def create_devices():
     created_devices = dict()
-    created_devices["nxos-netmiko"] = NetmikoDevice(
-        name="nxos-netmiko",
-        hostname="sbx-nxos-mgmt.cisco.com",
-        device_type=DeviceType.CISCO_NXOS
-    )
-    created_devices["nxos-netmiko"].set_port(8181)
-    created_devices["nxos-netmiko"].set_credentials(username="admin", password="Admin_1234!")
+    # created_devices["nxos-netmiko"] = NetmikoDevice(
+    #     name="nxos-netmiko",
+    #     hostname="sbx-nxos-mgmt.cisco.com",
+    #     device_type=DeviceType.CISCO_NXOS
+    # )
+    # created_devices["nxos-netmiko"].set_port(8181)
+    # created_devices["nxos-netmiko"].set_credentials(username="admin", password="Admin_1234!")
 
     created_devices["nxos-napalm"] = NapalmDevice(
         name="nxos-napalm",
@@ -23,13 +23,13 @@ def create_devices():
     created_devices["nxos-napalm"].set_port(8181)
     created_devices["nxos-napalm"].set_credentials(username="admin", password="Admin_1234!")
 
-    created_devices["nxos-ncclient"] = NcclientDevice(
-        name="nxos-ncclient",
-        hostname="sbx-nxos-mgmt.cisco.com",
-        device_type=DeviceType.NEXUS,
-    )
-    created_devices["nxos-ncclient"].set_port(10000)
-    created_devices["nxos-ncclient"].set_credentials(username="admin", password="Admin_1234!")
+    # created_devices["nxos-ncclient"] = NcclientDevice(
+    #     name="nxos-ncclient",
+    #     hostname="sbx-nxos-mgmt.cisco.com",
+    #     device_type=DeviceType.NEXUS,
+    # )
+    # created_devices["nxos-ncclient"].set_port(10000)
+    # created_devices["nxos-ncclient"].set_credentials(username="admin", password="Admin_1234!")
 
     return created_devices
 
