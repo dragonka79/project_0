@@ -18,7 +18,8 @@ class NapalmDevice(Device):
                 username=self.username,
                 password=self.password,
             )
-        elif self.device_type == DeviceType.IOS or self.device_type == DeviceType.NXOS_SSH:
+        elif (self.device_type == DeviceType.IOS or 
+              self.device_type == DeviceType.NXOS_SSH):
             self.connection = driver(
                 hostname=self.hostname,
                 username=self.username,
