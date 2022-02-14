@@ -6,7 +6,7 @@ import requests
 import scapy.all as scapy
 
 MONITOR_INTERVAL = 15
-DISCOVERY_INTERVAL = 300
+DISCOVERY_INTERVAL = 300 # 300 seconds
 
 
 def get_hosts():
@@ -21,7 +21,7 @@ def get_hosts():
     return response.json()
 
 
-def discovery():
+def  discovery():
 
     # DISCOVER HOSTS ON NETWORK USING ARPING FUNCTION
     print(
