@@ -28,7 +28,7 @@ def  discovery():
         "\n\n----- Discovery hosts on network using arping() function ---------------------"
     )
     ans, unans = scapy.arping("192.168.254.0/24")
-    ans.summary()
+    ans.summary() # Printing out the summary(??)
 
     for res in ans.res:
         print(f"oooo> IP address discovered: {res[0].payload.pdst}")

@@ -1,90 +1,12 @@
-# NOTE: this will disable insecure HTTPS request warnings that NAPALM gets
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from colorama import Fore
 
-import napalm
-
-def connect_napalm(hostname, username, password, port):
-
-    driver = napalm.get_network_driver()
-    napalm_device = driver(
-            hostname=hostname,
-            username=username,
-            password=password,
-            port=port
-        )
-
-    print(f"\n\n----- Connecting to {hostname}:{port}")
-    napalm_device.open()
-    print(f"----- Connected! --------------------")
-
-    return napalm_device
-
-
-def disconnect_napalm(connection):
-    connection.close()
-    print(f"----- Disconnected! --------------------")
-
-############################
-
-def get_facts_napalm(connection):
-
-    return connection.get_facts()
-
-########################################
-
-class Device:
-    def __init__(self, hostname, username, password, port):
-        self.hostname = hostname
-        self.username = username
-        self.password = password
-        self.port = port
-
-    def connect(self):
-
-        self.connection = connect_napalm(
-            self.hostname, 
-            self.username, 
-            self.password, 
-            self.port, 
-        )
-
-        return True
-
-    def get_facts(self):
-
-        return get_facts_napalm(self.connection)
-
-    def disconnect(self):
-
-        disconnect_napalm(self.connection)
-
-        return
-
-##########################x
-
-from pprint import pprint
-
-def create_devices():
-    created_devices = dict()
-
-    created_devices["nxos-napalm"] = Device(
-        hostname="sandbox-nxos-1.cisco.com",
-        username="admin",
-        password="Admin_1234!",
-        port="22"
-    )
-
-    return created_devices
-
-for _, device in create_devices().items():
-
-    if not device.connect(): # If the connection is not successfull, then:
-        print(f"----- Connection failed: {device.name}")
-        break
-
-    facts = device.get_facts()
-    print(f"----- Facts for device: {device.name}")
-    pprint(facts)
-
-    device.disconnect()
+hosts = {
+    "1": "zolcs", 
+    "2": "zsu"
+    }
+for host in hosts:
+    if hosts[host] == "zolcs":
+        color = Fore.RED
+    else:
+        color = Fore.GREEN
+    print(color + hosts[host])
