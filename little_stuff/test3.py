@@ -1,10 +1,15 @@
-for i in range(1,101):
-     if i % 3 == 0 and i % 5 == 0:
-          print('fizzbuzz')
-     elif i % 3 == 0:
-          print('fizz')
-     elif i % 5 == 0:
-          print('buzz')
-     else:
-          print(i)
 
+
+for i in range (1,101):
+
+    A = i % 3 == 0
+    B = i % 5 == 0
+
+    if A and B:
+        print('fizzbuzz')
+    elif A:
+        print('fizz')
+    elif B:
+        print('buzz')
+    else:
+        print(i)
